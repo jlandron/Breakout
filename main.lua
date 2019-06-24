@@ -1,33 +1,38 @@
 --[[
     update 0: Starting out
-    update 1: 
+    update 1: Sprite Sheets (Quads)
+
 ]]
-require("src/Dependencies")
+require('src/Dependencies')
 
 function love.load()
-    love.graphics.setDefaultFilter("nearest", "nearest")
+    love.graphics.setDefaultFilter('nearest', 'nearest')
 
     math.randomseed(os.time())
 
-    love.window.setTitle("Breakout")
+    love.window.setTitle('Breakout')
 
     gFonts = {
-        ["small"] = love.graphics.newFont("fonts/font.ttf", 8),
-        ["medium"] = love.graphics.newFont("fonts/font.ttf", 16),
-        ["large"] = love.graphics.newFont("fonts/font.ttf", 32)
+        ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
+        ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
+        ['large'] = love.graphics.newFont('fonts/font.ttf', 32)
     }
 
-    love.graphics.setFont(gFonts["small"])
+    love.graphics.setFont(gFonts['small'])
 
     gTextures = {
-        ["background"] = love.graphics.newImage("images/background.png"),
-        ["arrows"] = love.graphics.newImage("images/arrows.png"),
-        ["blocks"] = love.graphics.newImage("images/blocks.png"),
-        ["main"] = love.graphics.newImage("images/breakout.png"),
-        ["hearts"] = love.graphics.newImage("images/hearts.png"),
-        ["particle"] = love.graphics.newImage("images/particle.png"),
-        ["ui"] = love.graphics.newImage("images/ui.png"),
-        ["blocks"] = love.graphics.newImage("images/blocks.png")
+        ['background'] = love.graphics.newImage('images/background.png'),
+        ['arrows'] = love.graphics.newImage('images/arrows.png'),
+        ['blocks'] = love.graphics.newImage('images/blocks.png'),
+        ['main'] = love.graphics.newImage('images/breakout.png'),
+        ['hearts'] = love.graphics.newImage('images/hearts.png'),
+        ['particle'] = love.graphics.newImage('images/particle.png'),
+        ['ui'] = love.graphics.newImage('images/ui.png'),
+        ['blocks'] = love.graphics.newImage('images/blocks.png')
+    }
+
+    gFrames = {
+        ['paddles'] = GenerateQuadsPaddles(gTextures['main'])
     }
 
     push:setupScreen(
@@ -43,30 +48,30 @@ function love.load()
     )
 
     gSounds = {
-        ["paddle_hit"] = love.audio.newSource("sounds/paddle_hit.wav", "static"),
-        ["brick_hit_1"] = love.audio.newSource("sounds/brick-hit-1.wav", "static"),
-        ["brick_hit_2"] = love.audio.newSource("sounds/brick-hit-2.wav", "static"),
-        ["confirm"] = love.audio.newSource("sounds/confirm.wav", "static"),
-        ["high_score"] = love.audio.newSource("sounds/high_score.wav", "static"),
-        ["hurt"] = love.audio.newSource("sounds/hurt.wav", "static"),
-        ["no_select"] = love.audio.newSource("sounds/no-select.wav", "static"),
-        ["pause"] = love.audio.newSource("sounds/pause.wav", "static"),
-        ["recover"] = love.audio.newSource("sounds/recover.wav", "static"),
-        ["score"] = love.audio.newSource("sounds/score.wav", "static"),
-        ["select"] = love.audio.newSource("sounds/select.wav", "static"),
-        ["victory"] = love.audio.newSource("sounds/victory.wav", "static"),
-        ["wall_hit"] = love.audio.newSource("sounds/wall_hit.wav", "static"),
-        ["music"] = love.audio.newSource("sounds/music.wav", "static")
+        ['paddle_hit'] = love.audio.newSource('sounds/paddle_hit.wav', 'static'),
+        ['brick_hit_1'] = love.audio.newSource('sounds/brick-hit-1.wav', 'static'),
+        ['brick_hit_2'] = love.audio.newSource('sounds/brick-hit-2.wav', 'static'),
+        ['confirm'] = love.audio.newSource('sounds/confirm.wav', 'static'),
+        ['high_score'] = love.audio.newSource('sounds/high_score.wav', 'static'),
+        ['hurt'] = love.audio.newSource('sounds/hurt.wav', 'static'),
+        ['no_select'] = love.audio.newSource('sounds/no-select.wav', 'static'),
+        ['pause'] = love.audio.newSource('sounds/pause.wav', 'static'),
+        ['recover'] = love.audio.newSource('sounds/recover.wav', 'static'),
+        ['score'] = love.audio.newSource('sounds/score.wav', 'static'),
+        ['select'] = love.audio.newSource('sounds/select.wav', 'static'),
+        ['victory'] = love.audio.newSource('sounds/victory.wav', 'static'),
+        ['wall_hit'] = love.audio.newSource('sounds/wall_hit.wav', 'static'),
+        ['music'] = love.audio.newSource('sounds/music.wav', 'static')
     }
     --state machine setup, make sure to add new states here when you make them
     gStateMachine =
         StateMachine {
-        ["start"] = function()
+        ['start'] = function()
             return StartState()
         end
     }
     --initialize in start screen
-    gStateMachine:change("start")
+    gStateMachine:change('start')
     --table used to keep track of key presses
     love.keyboard.keysPressed = {}
 end
@@ -91,11 +96,11 @@ end
 function love.draw()
     push:start()
 
-    local backgroundWidth = gTextures["background"]:getWidth()
-    local backgroundHeight = gTextures["background"]:getHeight()
+    local backgroundWidth = gTextures['background']:getWidth()
+    local backgroundHeight = gTextures['background']:getHeight()
 
     love.graphics.draw(
-        gTextures["background"],
+        gTextures['background'],
         0,
         0, --draw at top corner
         0, --no rotation
@@ -111,7 +116,7 @@ function love.draw()
 end
 
 function displayFPS()
-    love.graphics.setFont(gFonts["small"])
+    love.graphics.setFont(gFonts['small'])
     love.graphics.setColor(0, 255, 0, 255)
-    love.graphics.print("FPS: " .. tostring(love.timer.getFPS()), 5, 5)
+    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 5, 5)
 end
