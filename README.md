@@ -5,7 +5,7 @@ Simple game clone of Breakout made in order to learn Game Development, Lua, and 
 
 To play the game, simply download the .love file and double click it to play. (once I have a functioning .love file)
 
-All source code is included, please feel free to edit, change or add to it. (If you want to you can run the game at any time during development)
+All source code is included, please feel free to edit, change or add to it. (If you want to you can run the game at any time during development. I do this in VSCode with the extension LOVE Launcher by Jan Werder)
 
 ### Prerequisites
 
