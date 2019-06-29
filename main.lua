@@ -1,7 +1,7 @@
 --[[
     update 0: Starting out
     update 1: Sprite Sheets (Quads)
-
+    update 2: Adding the ball and bouncing
 ]]
 require('src/Dependencies')
 
@@ -32,7 +32,8 @@ function love.load()
     }
 
     gFrames = {
-        ['paddles'] = GenerateQuadsPaddles(gTextures['main'])
+        ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
+        ['ball'] = GenerateQuadsBalls(gTextures['main'])
     }
 
     push:setupScreen(
@@ -68,6 +69,24 @@ function love.load()
         StateMachine {
         ['start'] = function()
             return StartState()
+        end,
+        ['play'] = function()
+            return PlayState()
+        end,
+        ['countdown'] = function()
+            return CountdownState()
+        end,
+        ['highscore'] = function()
+            return HighScoreState()
+        end,
+        ['victory'] = function()
+            return VictoryState()
+        end,
+        ['titlescreen'] = function()
+            return TitleScreenState()
+        end,
+        ['score'] = function()
+            return ScoreState()
         end
     }
     --initialize in start screen
