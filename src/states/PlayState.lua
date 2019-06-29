@@ -3,7 +3,7 @@ PlayState = Class {__includes = BaseState}
 function PlayState:init()
     self.paddle = Paddle()
     --random skin
-    self.ball = Ball(math.random(7))
+    self.ball = Ball(love.math.random(7))
     --random starting velocity
     self.ball.dx = math.random(-200, 200)
     self.ball.dy = math.random(-50, -60)
@@ -31,7 +31,7 @@ function PlayState:update(dt)
 
     self.paddle:update(dt)
     self.ball:update(dt)
-    
+
     --check if ball hits paddle, send upward if yes
     if self.ball:collides(self.paddle) then
         self.ball.dy = -self.ball.dy

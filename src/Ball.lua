@@ -1,6 +1,6 @@
 Ball = Class {}
 
-function init(skin)
+function Ball:init(skin)
     --ball size
     self.width = 8
     self.height = 8
@@ -13,7 +13,7 @@ function init(skin)
     self.skin = skin
 end
 --AABB collision detection
-function Ball:collides(taget)
+function Ball:collides(target)
     if self.x > target.x + target.width or target.x > self.x + self.width then
         return false
     end
@@ -30,7 +30,7 @@ function Ball:reset()
     self.dx = 0
     self.dy = 0
 end
-function update(dt)
+function Ball:update(dt)
     self.x = self.x + self.dx * dt
     self.y = self.y + self.dy * dt
     --counce off left side
@@ -59,7 +59,7 @@ function update(dt)
     end
 end
 
-function render()
+function Ball:render()
     -- draw the ball object on the screen
-    love.graphics.draw(gTextures['main'], gframes['balls'][self.skin], self.x, self.y)
+    love.graphics.draw(gTextures['main'], gFrames['balls'][self.skin], self.x, self.y)
 end

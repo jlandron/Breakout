@@ -2,6 +2,7 @@
     update 0: Starting out
     update 1: Sprite Sheets (Quads)
     update 2: Adding the ball and bouncing
+    update 3: Adding bricks
 ]]
 require('src/Dependencies')
 
@@ -33,7 +34,8 @@ function love.load()
 
     gFrames = {
         ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
-        ['ball'] = GenerateQuadsBalls(gTextures['main'])
+        ['balls'] = GenerateQuadsBalls(gTextures['main']),
+        ['bricks'] = GenerateQuadsBricks(gTextures['main'])
     }
 
     push:setupScreen(
