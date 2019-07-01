@@ -33,7 +33,7 @@ end
 function Ball:update(dt)
     self.x = self.x + self.dx * dt
     self.y = self.y + self.dy * dt
-    --counce off left side
+    --bounce off left side
     if self.x <= 0 then
         self.x = 0
         self.dx = -self.dx
@@ -63,3 +63,4 @@ function Ball:render()
     -- draw the ball object on the screen
     love.graphics.draw(gTextures['main'], gFrames['balls'][self.skin], self.x, self.y)
 end
+
