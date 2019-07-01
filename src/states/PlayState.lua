@@ -22,15 +22,19 @@ function PlayState:update(dt)
     end
     -- check if paused and allow paused
     if self.paused then
+
         if love.keyboard.wasPressed('tab') then
+
             self.paused = false
-            gSounds['pause']:play()
+            gSounds["pause"]:play()
         else
             return
         end
+
     elseif love.keyboard.wasPressed('tab') then
+
         self.paused = true
-        gSounds['pause']:play()
+        gSounds["pause"]:play()
         return
     end
 
@@ -41,6 +45,7 @@ function PlayState:update(dt)
     if self.ball:collides(self.paddle) then
         self.ball.y = self.ball.y - 8
         self.ball.dy = -self.ball.dy
+
 
         --change angle of bounce based on hit location and movement of paddle
         --add functionality to slow down ball
@@ -101,11 +106,13 @@ function PlayState:update(dt)
         end
     end
     if love.keyboard.wasPressed('escape') then
+
         love.event.quit()
     end
 end
 
 function PlayState:render()
+
     renderScore(self.score)
     renderHealth(self.health)
     -- body of render
@@ -118,5 +125,6 @@ function PlayState:render()
     if self.paused then
         love.graphics.setFont(gFonts['large'])
         love.graphics.printf('PAUSED', 0, VIRTUAL_HEIGHT / 2 - 14, VIRTUAL_WIDTH / 2 - 14)
+
     end
 end
