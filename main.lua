@@ -27,7 +27,6 @@ function love.load()
     gTextures = {
         ['background'] = love.graphics.newImage('images/background.png'),
         ['arrows'] = love.graphics.newImage('images/arrows.png'),
-        ['blocks'] = love.graphics.newImage('images/blocks.png'),
         ['main'] = love.graphics.newImage('images/breakout.png'),
         ['hearts'] = love.graphics.newImage('images/hearts.png'),
         ['particle'] = love.graphics.newImage('images/particle.png'),
@@ -85,7 +84,7 @@ function love.load()
         ['game_over'] = function()
             return GameOverState()
         end,
-        ['highscore'] = function()
+        ['high_score'] = function()
             return HighScoreState()
         end
     }
