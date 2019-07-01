@@ -3,19 +3,33 @@ StartState = Class {__includes = BaseState}
 local highlighted = 1
 
 function StartState:update(dt)
+    -- toggle highlighted option if we press an arrow key up or down
     if love.keyboard.wasPressed('up') or love.keyboard.wasPressed('down') then
         highlighted = highlighted == 1 and 2 or 1
         gSounds['paddle_hit']:play()
     end
 
-    if love.keyboard.wasPressed('escape') then
-        love.event.quit()
-    elseif love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+    -- confirm whichever option we have selected to change screens
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gSounds['confirm']:play()
 
         if highlighted == 1 then
-            gStateMachine:change('play')
+            gStateMachine:change(
+                'serve',
+                {
+                    paddle = Paddle(3),
+                    bricks = LevelMaker.createMap(1),
+                    health = 3,
+                    score = 0,
+                    level = 1
+                }
+            )
         end
+    end
+
+    -- we no longer have this globally, so include here
+    if love.keyboard.wasPressed('escape') then
+        love.event.quit()
     end
 end
 

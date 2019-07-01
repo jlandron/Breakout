@@ -1,7 +1,11 @@
 --[[
     update 0: Starting out
     update 1: Sprite Sheets (Quads)
-
+    update 2: Adding the ball and bouncing
+    update 3: Adding bricks
+    update 4: adding more collisions
+    update 5: adding hearts
+    update 6: updating levelmaker
 ]]
 require('src/Dependencies')
 
@@ -32,7 +36,10 @@ function love.load()
     }
 
     gFrames = {
-        ['paddles'] = GenerateQuadsPaddles(gTextures['main'])
+        ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
+        ['balls'] = GenerateQuadsBalls(gTextures['main']),
+        ['bricks'] = GenerateQuadsBricks(gTextures['main']),
+        ['hearts'] = GenerateQuadsHearts(gTextures['hearts'])
     }
 
     push:setupScreen(
@@ -68,6 +75,18 @@ function love.load()
         StateMachine {
         ['start'] = function()
             return StartState()
+        end,
+        ['serve'] = function()
+            return ServeState()
+        end,
+        ['play'] = function()
+            return PlayState()
+        end,
+        ['game_over'] = function()
+            return GameOverState()
+        end,
+        ['highscore'] = function()
+            return HighScoreState()
         end
     }
     --initialize in start screen
@@ -119,4 +138,22 @@ function displayFPS()
     love.graphics.setFont(gFonts['small'])
     love.graphics.setColor(0, 255, 0, 255)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 5, 5)
+end
+
+function renderHealth(health)
+    local healthX = VIRTUAL_WIDTH - 50
+    for i = 1, health do
+        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][1], healthX, 14)
+        healthX = healthX + 11
+    end
+    for i = 1, 3 - health do
+        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][2], healthX, 14)
+        healthX = healthX + 11
+    end
+end
+
+function renderScore(score)
+    love.graphics.setFont(gFonts['small'])
+    love.graphics.print('Score:', VIRTUAL_WIDTH - 60, 5)
+    love.graphics.printf(tostring(score), VIRTUAL_WIDTH - 50, 5, 40, 'right')
 end

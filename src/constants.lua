@@ -4,3 +4,6 @@ WINDOW_HEIGHT = 720
 --emulated window size
 VIRTUAL_WIDTH = 512
 VIRTUAL_HEIGHT = 288
+
+--set paddle movement speed
+PADDLE_SPEED = 200
