@@ -51,12 +51,6 @@ function Ball:update(dt)
         self.dy = -self.dy
         gSounds['wall_hit']:play()
     end
-    --bounce off bottom CHANGE LATER!!!! lose health/ends game if hits bottom
-    if self.y >= VIRTUAL_HEIGHT - self.height then
-        self.y = VIRTUAL_HEIGHT - self.height
-        self.dy = -self.dy
-        gSounds['wall_hit']:play()
-    end
 end
 
 function Ball:render()

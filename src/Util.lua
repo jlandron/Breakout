@@ -74,7 +74,7 @@ end
 
 function GenerateQuadsHearts(atlas)
     local quads = {}
-    quads[1] = love.graphics.newQuad(0, 0, 8, 8, atlas:getWidth(), atlas:getHeight())
-    quads[2] = love.graphics.newQuad(8, 0, 8, 8, atlas:getWidth(), atlas:getHeight())
+    quads[1] = love.graphics.newQuad(0, 0, 10, 10, atlas:getWidth(), atlas:getHeight())
+    quads[2] = love.graphics.newQuad(10, 0, 10, 10, atlas:getWidth(), atlas:getHeight())
     return quads
 end

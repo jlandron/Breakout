@@ -4,6 +4,8 @@
     update 2: Adding the ball and bouncing
     update 3: Adding bricks
     update 4: adding more collisions
+    update 5: adding hearts
+    update 6: updating levelmaker
 ]]
 require('src/Dependencies')
 
@@ -74,29 +76,17 @@ function love.load()
         ['start'] = function()
             return StartState()
         end,
-        ['play'] = function()
-            return PlayState()
-        end,
         ['serve'] = function()
             return ServeState()
         end,
-        ['countdown'] = function()
-            return CountdownState()
+        ['play'] = function()
+            return PlayState()
         end,
-        ['gaem_over'] = function()
+        ['game_over'] = function()
             return GameOverState()
         end,
         ['highscore'] = function()
             return HighScoreState()
-        end,
-        ['victory'] = function()
-            return VictoryState()
-        end,
-        ['titlescreen'] = function()
-            return TitleScreenState()
-        end,
-        ['score'] = function()
-            return ScoreState()
         end
     }
     --initialize in start screen
@@ -151,13 +141,13 @@ function displayFPS()
 end
 
 function renderHealth(health)
-    local healthX = VIRTUAL_WIDTH - 100
+    local healthX = VIRTUAL_WIDTH - 50
     for i = 1, health do
-        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][1], healthX, 10)
+        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][1], healthX, 14)
         healthX = healthX + 11
     end
     for i = 1, 3 - health do
-        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][2], healthX, 10)
+        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][2], healthX, 14)
         healthX = healthX + 11
     end
 end

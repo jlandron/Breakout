@@ -1,27 +1,13 @@
 PlayState = Class {__includes = BaseState}
 
-function PlayState:init()
-    self.paddle = Paddle()
-    --random skin
-    self.ball = Ball(love.math.random(7))
-    --random starting velocity
-    self.ball.dx = math.random(-200, 200)
-    self.ball.dy = math.random(-50, -60)
-    --position it in the center
-    self.ball.x = VIRTUAL_WIDTH / 2 - 4
-    self.ball.y = VIRTUAL_HEIGHT - 42
-
-    self.bricks = LevelMaker.createMap()
-    --set initial state to play
-    self.paused = false
-    self.timer = 0
-end
 function PlayState:enter(params)
     self.paddle = params.paddle
     self.bricks = params.bricks
     self.health = params.health
     self.score = params.score
     self.ball = params.ball
+    self.ball.dx = math.random(-200, 200)
+    self.ball.dy = math.random(-50, -60)
     self.paused = false
     self.timer = 0
 end
@@ -31,16 +17,8 @@ function PlayState:update(dt)
     if self.timer >= 60 then
         self.timer = 0
         --check which direction the ball is moving and add 1 that direction
-        if self.ball.dy < 0 then
-            self.ball.dy = self.ball.dy - 1
-        else
-            self.ball.dy = self.ball.dy + 1
-        end
-        if self.ball.dx < 0 then
-            self.ball.dx = self.ball.dx - 1
-        else
-            self.ball.dx = self.ball.dx + 1
-        end
+        self.ball.dx = self.ball.dx * 1.02
+        self.ball.dy = self.ball.dy * 1.02
     end
     -- check if paused and allow paused
     if self.paused then
@@ -65,9 +43,9 @@ function PlayState:update(dt)
         self.ball.dy = -self.ball.dy
 
         --change angle of bounce based on hit location and movement of paddle
-        if self.ball.x < self.paddle.x + (self.paddle.width / 2) and self.paddle.dx < 0 then
+        if self.paddle.dx < 0 then
             self.ball.dx = -50 + -(8 * (self.paddle.x + self.paddle.width / 2 - self.ball.x))
-        elseif self.ball.x > self.paddle.x + (self.paddle.width / 2) and self.paddle.dx > 0 then
+        elseif self.paddle.dx > 0 then
             self.ball.dx = 50 + (8 * math.abs(self.paddle.x + self.paddle.width / 2 - self.ball.x))
         end
         gSounds['paddle_hit']:play()
@@ -98,7 +76,7 @@ function PlayState:update(dt)
         end
     end
     --if ball goes below bounds, go to serve state
-    if self.ball.y >= VIRTUAL_HEIGHT then
+    if self.ball.y >= VIRTUAL_HEIGHT - 1 then
         self.health = self.health - 1
         gSounds['hurt']:play()
 
@@ -127,6 +105,8 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()
+    renderScore(self.score)
+    renderHealth(self.health)
     -- body of render
     for k, brick in pairs(self.bricks) do
         brick:render()
