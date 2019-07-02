@@ -5,7 +5,7 @@ function HighScoreState:update(dt)
         love.event.quit()
     end
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('start') {}
+        gStateMachine:change('start')
     end
 end
 

@@ -56,20 +56,39 @@ function GenerateQuadsBalls(atlas)
 
     return quads
 end
-function GenerateQuadsBricks(atlas)
-    local x = 0
-    local y = 0
-    local counter = 1
-    local quads = {}
-    for row = 0, 3 do
-        for i = 0, 5 do
-            quads[counter] = love.graphics.newQuad(x, y, 32, 16, atlas:getWidth(), atlas:getHeight())
-            x = x + 16
-            counter = counter + 1
-        end
-        y = y + 16
+function table.slice(tbl, first, last, step)
+    local sliced = {}
+
+    for i = first or 1, last or #tbl, step or 1 do
+        sliced[#sliced + 1] = tbl[i]
     end
-    return quads
+
+    return sliced
+end
+function GenerateQuads(atlas, tilewidth, tileheight)
+    local sheetWidth = atlas:getWidth() / tilewidth
+    local sheetHeight = atlas:getHeight() / tileheight
+
+    local sheetCounter = 1
+    local spritesheet = {}
+
+    for y = 0, sheetHeight - 1 do
+        for x = 0, sheetWidth - 1 do
+            spritesheet[sheetCounter] =
+                love.graphics.newQuad(x * tilewidth, y * tileheight, tilewidth, tileheight, atlas:getDimensions())
+            sheetCounter = sheetCounter + 1
+        end
+    end
+
+    return spritesheet
+end
+--[[
+    This function is specifically made to piece out the bricks from the
+    sprite sheet. Since the sprite sheet has non-uniform sprites within,
+    we have to return a subset of GenerateQuads.
+]]
+function GenerateQuadsBricks(atlas)
+    return table.slice(GenerateQuads(atlas, 32, 16), 1, 21)
 end
 
 function GenerateQuadsHearts(atlas)

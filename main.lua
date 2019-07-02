@@ -6,6 +6,10 @@
     update 4: adding more collisions
     update 5: adding hearts
     update 6: updating levelmaker
+    update 7: adding tier mechanics
+    update 8: adding particle system
+    update 9: adding level progression
+    update 10: adding high score and file system
 ]]
 require('src/Dependencies')
 
@@ -86,6 +90,9 @@ function love.load()
         end,
         ['high_score'] = function()
             return HighScoreState()
+        end,
+        ['victory'] = function()
+            return VictoryState()
         end
     }
     --initialize in start screen
