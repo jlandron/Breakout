@@ -3,7 +3,8 @@ Simple game clone of Breakout made in order to learn Game Development, Lua, and 
 
 ## Getting Started
 
-To play the game, simply download the .love file and double click it to play. (once I have a functioning .love file)
+To play the game on windows, simply download the BreakoutWindows file and run Breakout.exe (The included .dll files are required)
+Currently the BreakoutAndroid build is broken due to scaling and input issues. I should have a working apk soon enough.
 
 All source code is included, please feel free to edit, change or add to it. (If you want to you can run the game at any time during development. I do this in VSCode with the extension LOVE Launcher by Jan Werder)
 
