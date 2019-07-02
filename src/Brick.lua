@@ -49,7 +49,7 @@ function Brick:init(x, y)
 
     self.psystem:setParticleLifetime(0.5, 1)
 
-    self.psystem:setLinearAcceleration(-80, -80, 80, 80)
+    self.psystem:setLinearAcceleration(-80, -80, 80, 100)
 
     self.psystem:setSpread(100)
 end
@@ -71,23 +71,14 @@ function Brick:hit()
     gSounds['brick_hit_2']:play()
 
     if self.tier > 0 then
-        if self.color == 1 then
-            self.tier = self.tier - 1
-            self.color = 5
-        else
-            self.color = self.color - 1
-        end
+        self.tier = self.tier - 1
     else
-        if self.color == 1 then
-            self.inPlay = false
-        else
-            self.color = self.color - 1
-        end
+        self.inPlay = false
     end
 end
 function Brick:render()
     if self.inPlay then
-        love.graphics.draw(gTextures['main'], gFrames['bricks'][((self.color) * 4) + self.tier], self.x, self.y)
+        love.graphics.draw(gTextures['main'], gFrames['bricks'][1 + ((self.color - 1) * 4) + self.tier], self.x, self.y)
     end
 end
 --methods just for particle system

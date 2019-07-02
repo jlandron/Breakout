@@ -7,13 +7,11 @@ function Paddle:init(skin)
 
     self.dx = 0
 
-    self.width = 64
+    self.width = (((skin - 1) % 4) + 1) * 32
 
     self.height = 16
 
     self.skin = skin
-
-    self.size = 2
 end
 
 function Paddle:update(dt)
@@ -34,5 +32,5 @@ function Paddle:update(dt)
 end
 
 function Paddle:render()
-    love.graphics.draw(gTextures['main'], gFrames['paddles'][self.size + 4 * (self.skin - 1)], self.x, self.y)
+    love.graphics.draw(gTextures['main'], gFrames['paddles'][self.skin], self.x, self.y)
 end

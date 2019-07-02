@@ -5,6 +5,7 @@ function VictoryState:enter(params)
     self.paddle = params.paddle
     self.health = params.health
     self.ball = params.ball
+    self.highScores = params.highScores
 end
 function VictoryState:update(dt)
     if love.keyboard.wasPressed('escape') then
@@ -22,7 +23,8 @@ function VictoryState:update(dt)
                 health = self.health < 3 and self.health + 1 or 3,
                 score = self.score,
                 level = self.level + 1,
-                ball = self.ball
+                ball = self.ball,
+                highScores = self.highScores
             }
         )
     end

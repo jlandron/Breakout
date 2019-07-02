@@ -7,6 +7,7 @@ function PlayState:enter(params)
     self.score = params.score
     self.ball = params.ball
     self.level = params.level
+    self.highScores = params.highScores
 
     self.ball.dx = math.random(-200, 200)
     self.ball.dy = math.random(-50, -60)
@@ -47,10 +48,10 @@ function PlayState:update(dt)
         --change angle of bounce based on hit location and movement of paddle
         --add functionality to slow down ball
         -- if we hit the paddle on its left side while moving left...
-        if self.ball.x < self.paddle.x + (self.paddle.width / 2) and self.paddle.dx < 0 then
+        if self.ball.x < self.paddle.x + (self.paddle.width / 3) then
             -- else if we hit the paddle on its right side while moving right...
             self.ball.dx = -50 + -(8 * (self.paddle.x + self.paddle.width / 2 - self.ball.x))
-        elseif self.ball.x > self.paddle.x + (self.paddle.width / 2) and self.paddle.dx > 0 then
+        elseif self.ball.x > self.paddle.x + (self.paddle.width / 2) then
             self.ball.dx = 50 + (8 * math.abs(self.paddle.x + self.paddle.width / 2 - self.ball.x))
         end
         gSounds['paddle_hit']:play()
@@ -64,14 +65,15 @@ function PlayState:update(dt)
                 level = self.level,
                 paddle = self.paddle,
                 health = self.health,
-                ball = self.ball
+                ball = self.ball,
+                highScores = self.highScores
             }
         )
     end
     for k, brick in pairs(self.bricks) do
         --only check collision for active bricks
         if brick.inPlay and self.ball:collides(brick) then
-            self.score = self.score + (brick.tier * 200 + brick.color * 25)
+            self.score = self.score + ((brick.tier + 1) * 25 * PADDLE_HANDICAP)
             --trigger bricks hit method and change ball direction
             brick:hit()
 
@@ -102,7 +104,8 @@ function PlayState:update(dt)
                 'game_over',
                 {
                     score = self.score,
-                    level = self.level
+                    level = self.level,
+                    highScores = self.highScores
                 }
             )
         else
@@ -113,7 +116,8 @@ function PlayState:update(dt)
                     bricks = self.bricks,
                     health = self.health,
                     score = self.score,
-                    level = self.level
+                    level = self.level,
+                    highScores = self.highScores
                 }
             )
         end

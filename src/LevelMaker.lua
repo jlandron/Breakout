@@ -20,8 +20,8 @@ function LevelMaker.createMap(level)
     local numCols = math.random(7, 13)
     numCols = numCols % 2 == 0 and (numCols + 1) or numCols
 
-    local highestTier = math.min(3, math.floor(level / 5))
-    local highestColor = math.min(5, level % 5 + 3)
+    local highestTier = math.min(3, math.floor(level / 2))
+    local highestColor = math.random(1, 5)
 
     --lay out bricks so they all touch
     for y = 1, numRows do

@@ -42,7 +42,8 @@ function love.load()
         ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
         ['balls'] = GenerateQuadsBalls(gTextures['main']),
         ['bricks'] = GenerateQuadsBricks(gTextures['main']),
-        ['hearts'] = GenerateQuadsHearts(gTextures['hearts'])
+        ['hearts'] = GenerateQuadsHearts(gTextures['hearts']),
+        ['arrows'] = GenerateQuads(gTextures['arrows'], 24, 24)
     }
 
     push:setupScreen(
@@ -79,6 +80,12 @@ function love.load()
         ['start'] = function()
             return StartState()
         end,
+        ['high_score'] = function()
+            return HighScoreState()
+        end,
+        ['paddle_select'] = function()
+            return PaddleSelectState()
+        end,
         ['serve'] = function()
             return ServeState()
         end,
@@ -88,15 +95,23 @@ function love.load()
         ['game_over'] = function()
             return GameOverState()
         end,
-        ['high_score'] = function()
-            return HighScoreState()
-        end,
         ['victory'] = function()
             return VictoryState()
+        end,
+        ['enter_high_score'] = function()
+            return EnterHighScoreState()
         end
     }
     --initialize in start screen
-    gStateMachine:change('start')
+    gStateMachine:change(
+        'start',
+        {
+            highScores = loadHighScores()
+        }
+    )
+    gSounds['music']:play()
+    gSounds['music']:setVolume(50)
+    gSounds['music']:setLooping(true)
     --table used to keep track of key presses
     love.keyboard.keysPressed = {}
 end
@@ -135,8 +150,6 @@ function love.draw()
 
     gStateMachine:render()
 
-    displayFPS()
-
     push:finish()
 end
 
@@ -162,4 +175,43 @@ function renderScore(score)
     love.graphics.setFont(gFonts['small'])
     love.graphics.print('Score:', VIRTUAL_WIDTH - 60, 5)
     love.graphics.printf(tostring(score), VIRTUAL_WIDTH - 50, 5, 40, 'right')
+end
+
+function loadHighScores()
+    love.filesystem.setIdentity('breakout.lst', true)
+    --check if file exists
+    if not love.filesystem.exists('breakout.lst') then
+        local scores = ''
+        for i = 10, 1, -1 do
+            scores = scores .. 'JPL\n'
+            scores = scores .. tostring(i * 1000) .. '\n'
+        end
+
+        love.filesystem.write('breakout.lst', scores)
+    end
+    local name = true
+    local currentName = nil
+    local counter = 1
+
+    local scores = {}
+
+    for i = 1, 10 do
+        scores[i] = {
+            name = nil,
+            score = nil
+        }
+    end
+
+    for line in love.filesystem.lines('breakout.lst') do
+        if name then
+            scores[counter].name = string.sub(line, 1, 3)
+        else
+            scores[counter].score = tonumber(line)
+            counter = counter + 1
+        end
+        --flip name flag
+        name = not name
+    end
+
+    return scores
 end
