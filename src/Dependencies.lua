@@ -5,6 +5,10 @@
 push = require('lib/push')
 --library to allow OOP
 Class = require('lib/class')
+--library to add live loading of edited files
+--lurker = require('lib/lurker/lurker')
+--GUI library
+--suit = require('lib/suit')
 
 require('src/constants')
 
@@ -25,4 +29,4 @@ require('src/states/HighScoreState')
 require('src/states/GameOverState')
 require('src/states/VictoryState')
 require('src/states/EnterHighScoreState')
-require("src/states/PaddleSelectState")
+require('src/states/PaddleSelectState')

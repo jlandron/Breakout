@@ -110,7 +110,7 @@ function love.load()
         }
     )
     gSounds['music']:play()
-    gSounds['music']:setVolume(50)
+    gSounds['music']:setVolume(0.5)
     gSounds['music']:setLooping(true)
     --table used to keep track of key presses
     love.keyboard.keysPressed = {}
@@ -122,6 +122,7 @@ end
 
 function love.update(dt)
     gStateMachine:update(dt)
+    
     --reset keys pressed
     love.keyboard.keysPressed = {}
 end
