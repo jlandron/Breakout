@@ -21,7 +21,7 @@ setmetatable(push, push)
 
 function push:applySettings(settings)
   for k, v in pairs(settings) do
-    self["_" .. k] = v
+    self['_' .. k] = v
   end
 end
 
@@ -51,21 +51,21 @@ function push:setupScreen(WWIDTH, WHEIGHT, RWIDTH, RHEIGHT, settings)
   self:initValues()
 
   if self._canvas then
-    self:setupCanvas({"default"}) --setup canvas
+    self:setupCanvas({'default'}) --setup canvas
   end
 
   self._borderColor = {0, 0, 0}
 
   self._drawFunctions = {
-    ["start"] = self.start,
-    ["end"] = self.finish
+    ['start'] = self.start,
+    ['end'] = self.finish
   }
 
   return self
 end
 
 function push:setupCanvas(canvases)
-  table.insert(canvases, {name = "_render"}) --final render
+  table.insert(canvases, {name = '_render'}) --final render
 
   self._canvas = true
   self.canvases = {}
@@ -96,7 +96,7 @@ function push:getCanvasTable(name)
 end
 function push:setShader(name, shader)
   if not shader then
-    self:getCanvasTable("_render").shader = name
+    self:getCanvasTable('_render').shader = name
   else
     self:getCanvasTable(name).shader = shader
   end
@@ -128,9 +128,9 @@ end
 --
 
 --[[ DEPRECATED ]] function push:apply(operation, shader)
-  if operation == "start" then
+  if operation == 'start' then
     self:start()
-  elseif operation == "finish" or operation == "end" then
+  elseif operation == 'finish' or operation == 'end' then
     self:finish(shader)
   end
 end
@@ -155,7 +155,7 @@ end
 function push:finish(shader)
   love.graphics.setBackgroundColor(unpack(self._borderColor))
   if self._canvas then
-    local _render = self:getCanvasTable("_render")
+    local _render = self:getCanvasTable('_render')
 
     love.graphics.pop()
 
@@ -172,8 +172,8 @@ function push:finish(shader)
 
     --draw render
     love.graphics.translate(self._OFFSET.x, self._OFFSET.y)
-    love.graphics.setShader(shader or self:getCanvasTable("_render").shader)
-    love.graphics.draw(self:getCanvasTable("_render").canvas, 0, 0, 0, self._SCALE.x, self._SCALE.y)
+    love.graphics.setShader(shader or self:getCanvasTable('_render').shader)
+    love.graphics.draw(self:getCanvasTable('_render').canvas, 0, 0, 0, self._SCALE.x, self._SCALE.y)
 
     --clear canvas
     for i = 1, #self.canvases do
@@ -223,7 +223,7 @@ function push:switchFullscreen(winw, winh)
 
   self:initValues()
 
-  love.window.setFullscreen(self._fullscreen, "desktop")
+  love.window.setFullscreen(self._fullscreen, 'desktop')
   if not self._fullscreen and (winw or winh) then
     love.window.setMode(self._RWIDTH, self._RHEIGHT) --set window dimensions
   end
